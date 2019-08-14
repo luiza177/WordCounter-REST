@@ -36,7 +36,6 @@ class HelloHandler : public Http::Handler
             else if (request.method() == Http::Method::Post)
             {
                 response.send(Http::Code::Ok, "<h2>Hah.</h2>");
-                //TODO: validate login.
             }
         }
         else 

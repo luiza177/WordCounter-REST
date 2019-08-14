@@ -3,25 +3,6 @@
 #include <functional>
 using namespace Pistache;
 
-std::vector<std::string> nodeParser(std::string body, char c = ' ')
-{
-    std::istringstream bodyStream(body);
-    
-    std::vector<std::string> nodes;
-    std::string node;
-    size_t pos = -1;
-    
-    while(bodyStream >> node)
-    {
-        while((pos = node.rfind(c)) != std::string::npos)
-        {
-            nodes.push_back(node);
-        }
-    }
-    return nodes;
-}
-
-
 class Bottle
 {
 private:
