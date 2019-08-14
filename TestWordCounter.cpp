@@ -10,12 +10,22 @@ int main(int argc, char *argv[])
 TEST(WordCounter, CreatesVectorOfWords)
 {
     auto text = std::string("Bebezinho bonitinho bebebol");
+    
     auto words = WordCounter::separateIntoWords(text);
+    
     ASSERT_EQ(words.size(), 3);
-    // ASSERT_EQ(words.at(1), "bonitinho");
+    ASSERT_EQ(words.at(1), "bonitinho");
 }
 
-
+TEST(WordCounter, ConvertsAllWordsToLowerCase)
+{
+    auto text = std::string("BEBEbol");
+    auto words = WordCounter::separateIntoWords(text);
+    
+    WordCounter::convertToLowerCase(words);
+    
+    ASSERT_EQ(words.at(0), "bebebol");
+}
 
 
 
