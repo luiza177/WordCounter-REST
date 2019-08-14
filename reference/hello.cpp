@@ -60,9 +60,5 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-//TODO: Understand pistache in terms of bottle
 //TODO: TDD server
 //TODO: TDD client
-
-// @app.route('/bleep/<times:int>')
-// @app.route('/bleep/<name:path>')

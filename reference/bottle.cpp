@@ -1,7 +1,26 @@
 #include "pistache/endpoint.h"
 #include <pistache/router.h>
-
+#include <functional>
 using namespace Pistache;
+
+std::vector<std::string> nodeParser(std::string body, char c = ' ')
+{
+    std::istringstream bodyStream(body);
+    
+    std::vector<std::string> nodes;
+    std::string node;
+    size_t pos = -1;
+    
+    while(bodyStream >> node)
+    {
+        while((pos = node.rfind(c)) != std::string::npos)
+        {
+            nodes.push_back(node);
+        }
+    }
+    return nodes;
+}
+
 
 class Bottle
 {
@@ -70,18 +89,18 @@ private:
             }
             else if (request.method() == Http::Method::Post)
             {
-                //TODO: validate login.
-                //? MIME? forms??
-                // try 
-                // {
-                    // if (validateLogin())
-                        // response.send(Http::Code::Ok, "<h3>Your login info was correct.</h3>");
-                    // else
-                        // response.send(Http::Code::Ok, "<h4>Your password was incorrect.</h4>");
-                // catch std::exception e
-                // {
-                        // response.send(Http::Code::Ok, "<h4>No such username.</h4>");
-                // }
+                try 
+                {
+                    auto creds = nodeParser(request.body());
+                    if (validateLogin(creds.at(0), creds.at(1)))
+                        response.send(Http::Code::Ok, "<h3>Your login info was correct.</h3>");
+                    else
+                        response.send(Http::Code::Ok, "<h4>Your password was incorrect.</h4>");
+                }
+                catch (std::exception e)
+                {
+                    response.send(Http::Code::Ok, "<h4>No such username.</h4>");
+                }
                 response.send(Http::Code::Ok, "<h2>Hah.</h2>");
             }
     }
@@ -90,6 +109,25 @@ private:
     {
         return m_loginBank.at(username) == passwd;
     }
+    
+    std::vector<std::string> nodeParser(std::string body)
+    {
+        std::vector<std::string> result;
+        auto ampPos = body.find('&');
+        auto un = body.substr(0, ampPos);
+        auto pw = body.substr(ampPos + 1);
+        
+        auto eqPos = un.find('=');
+        auto username = un.substr(eqPos + 1);
+        
+        eqPos = pw.find('=');
+        auto passwd = pw.substr(eqPos + 1);
+
+        result.push_back(username);
+        result.push_back(passwd);
+        return result;
+    }
+    
 
 public:
     Bottle(Address addr) : httpEndpoint(std::make_shared<Http::Endpoint>(addr)) {}
