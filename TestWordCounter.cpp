@@ -14,7 +14,6 @@ TEST(WordCounter, CreatesVectorOfWords)
     auto words = WordCounter::separateIntoWords(text);
     
     ASSERT_EQ(words.size(), 3);
-    // ASSERT_EQ(words.at(1), "bonitinho");
 }
 
 TEST(WordCounter, ConvertsAllWordsToLowerCase)
@@ -47,5 +46,3 @@ TEST(WordCounter, EliminatesNonAlphaNumCharacters)
 
     ASSERT_EQ(words.at(0), "bebebol");
 }
-
-//TODO: eliminates non-alphanum characters

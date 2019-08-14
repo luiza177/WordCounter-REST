@@ -45,7 +45,8 @@ namespace WordCounter
                         {
                             return !::isalnum(c);
                         }
-                    )
+                    ),
+                    word.end()
                 );
             }
         );
