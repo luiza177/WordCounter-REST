@@ -72,13 +72,15 @@ private:
             {
                 //TODO: validate login.
                 //? MIME? forms??
-                // if (validateLogin())
+                // try 
                 // {
-                //     response.send(Http::Code::Ok, "<h3>Your login info was correct.</h3>");
-                // }
-                // else
+                    // if (validateLogin())
+                        // response.send(Http::Code::Ok, "<h3>Your login info was correct.</h3>");
+                    // else
+                        // response.send(Http::Code::Ok, "<h4>Your password was incorrect.</h4>");
+                // catch std::exception e
                 // {
-                //     response.send(Http::Code::Ok, "<h3>No such username or password.</h3>");
+                        // response.send(Http::Code::Ok, "<h4>No such username.</h4>");
                 // }
                 response.send(Http::Code::Ok, "<h2>Hah.</h2>");
             }
@@ -86,7 +88,7 @@ private:
 
     bool validateLogin(std::string username, std::string passwd)
     {
-        return m_loginBank[username] == passwd;
+        return m_loginBank.at(username) == passwd;
     }
 
 public:
