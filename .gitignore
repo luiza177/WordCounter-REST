@@ -1,4 +1,6 @@
 build/
 pistache/
+.vscode/
 
+TestCount
 count
