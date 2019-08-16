@@ -1,9 +1,7 @@
-class WordCounterClient
-{
-private:
-    /* data */
-public:
-    WordCounterClient() {}
-    ~WordCounterClient() {}
-};
+#include "json.hpp"
 
+int main(int argc, char const *argv[])
+{
+    /* code */
+    return 0;
+}

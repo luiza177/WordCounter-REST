@@ -1,4 +1,4 @@
-#include "pistache/endpoint.h"
+#include <pistache/endpoint.h>
 #include <pistache/router.h>
 #include <functional>
 using namespace Pistache;
@@ -60,30 +60,30 @@ private:
     void login(const Rest::Request& request, Http::ResponseWriter response)
     {
         if (request.method() == Http::Method::Get) 
+        {
+            response.send(Http::Code::Ok, 
+                R"(<form action="/login" method="post">
+                Username: <input name="username" type="text" />
+                Password: <input name="password" type="password" />
+                <input value="Login" type="submit" />
+                </form>)");
+        }
+        else if (request.method() == Http::Method::Post)
+        {
+            try 
             {
-                response.send(Http::Code::Ok, 
-                    R"(<form action="/login" method="post">
-                    Username: <input name="username" type="text" />
-                    Password: <input name="password" type="password" />
-                    <input value="Login" type="submit" />
-                    </form>)");
+                auto creds = nodeParser(request.body());
+                if (validateLogin(creds.at(0), creds.at(1)))
+                    response.send(Http::Code::Ok, "<h3>Your login info was correct.</h3>");
+                else
+                    response.send(Http::Code::Ok, "<h4>Your password was incorrect.</h4>");
             }
-            else if (request.method() == Http::Method::Post)
+            catch (std::exception e)
             {
-                try 
-                {
-                    auto creds = nodeParser(request.body());
-                    if (validateLogin(creds.at(0), creds.at(1)))
-                        response.send(Http::Code::Ok, "<h3>Your login info was correct.</h3>");
-                    else
-                        response.send(Http::Code::Ok, "<h4>Your password was incorrect.</h4>");
-                }
-                catch (std::exception e)
-                {
-                    response.send(Http::Code::Ok, "<h4>No such username.</h4>");
-                }
-                response.send(Http::Code::Ok, "<h2>Hah.</h2>");
+                response.send(Http::Code::Ok, "<h4>No such username.</h4>");
             }
+            // response.send(Http::Code::Ok, "<h2>Hah.</h2>");
+        }
     }
 
     bool validateLogin(std::string username, std::string passwd)

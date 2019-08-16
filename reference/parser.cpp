@@ -25,7 +25,6 @@ std::vector<std::string> nodeParser(std::string body)
 
 int main(int argc, char const *argv[])
 {
-    // username=guinho&password=asdf
     auto html = "username=guinho&password=asdf";
     auto nodes = nodeParser(html);
     auto i = 0;

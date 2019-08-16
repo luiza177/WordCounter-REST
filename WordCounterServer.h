@@ -1,5 +1,6 @@
-#include "pistache/endpoint.h"
+#include <pistache/endpoint.h>
 #include <pistache/router.h>
+#include "json.hpp"
 #include "WordCounter.h"
 
 using namespace Pistache;
@@ -21,7 +22,13 @@ private:
     {
         // check headers?
         // get body
-        // do json        
+        // do json
+        nlohmann::json inputJ = nlohmann::json::parse(request.body());
+        if (inputJ.find("text") != inputJ.end())
+        {
+            nlohmann::json responseJ = WordCounter::analyzeWords(inputJ.at("text"));
+            response.send(Http::Code::Ok, responseJ.dump());
+        }
     }
 public:
     WordCounterServer(Address addr) : httpEndpoint(std::make_shared<Http::Endpoint>(addr)) {}
