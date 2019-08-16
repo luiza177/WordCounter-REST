@@ -23,11 +23,11 @@ private:
         // check headers?
         // get body
         // do json
-        nlohmann::json inputJ = nlohmann::json::parse(request.body());
-        if (inputJ.find("text") != inputJ.end())
+        nlohmann::json inputJson = nlohmann::json::parse(request.body());
+        if (inputJson.find("text") != inputJson.end())
         {
-            nlohmann::json responseJ = WordCounter::analyzeWords(inputJ.at("text"));
-            response.send(Http::Code::Ok, responseJ.dump());
+            nlohmann::json responseJson = WordCounter::analyzeWords(inputJson.at("text"));
+            response.send(Http::Code::Ok, responseJson.dump());
         }
     }
 public:
