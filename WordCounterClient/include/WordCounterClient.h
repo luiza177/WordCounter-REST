@@ -29,6 +29,6 @@ public:
     }
     void displayWordAnalysis()
     {
-        std::cout << m_jsonWordAnalysis.dump();
+        std::cout << m_jsonWordAnalysis.dump() << std::endl;
     }
 };

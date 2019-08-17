@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(server)
+project(bottle-cpp)
 
 # add_executable(fuckyou hello.cpp)
 add_executable(fuckyou bottle.cpp)
