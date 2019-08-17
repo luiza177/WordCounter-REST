@@ -4,7 +4,7 @@ set(this WordCounter)
 
 project(${this})
 
-set(WORDCOUNTER_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(WORDCOUNTER_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE INTERNAL "")
 
 include_directories(
     ${WORDCOUNTER_INCLUDE_DIR}
